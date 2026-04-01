@@ -4741,6 +4741,14 @@ a.text-theme:hover,
   background-color: transparent;
 }
 
+@media(max-width: 600px) {
+  .vs-header {
+    position: sticky;
+    top: 0;
+    z-index: 41;
+  }
+}
+
 .header-inner {
   margin-top: -30px;
   position: relative;
