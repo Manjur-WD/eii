@@ -134,6 +134,10 @@
 
   $(".vs-menu-wrapper").vsmobilemenu();
 
+  $(".vs-mobile-menu ul li a").on("click", function () {
+    $(".vs-menu-wrapper").removeClass("vs-body-visible");
+  });
+
   /*---------- 04. Sticky fix ----------*/
   var lastScrollTop = "";
   var scrollToTopBtn = ".scrollToTop";
