@@ -9632,6 +9632,13 @@ blockquote.vs-quote .quote-author {
   visibility: visible;
 }
 
+.service-style2 .service-img img {
+  height: 100%;
+  width: 100%;
+  object-position: center;
+  object-fit: cover;
+}
+
 .service-style2 .vs-btn {
   display: inline-flex;
   align-items: center;

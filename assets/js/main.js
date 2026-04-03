@@ -682,7 +682,7 @@ $(document).ready(function () {
 });
 
 // Google Script ka URL sabse upar rakhein
-const googleScriptURL = "https://script.google.com/macros/s/AKfycbyQNbqO2ANxIvs4zWr7GV6stxxpdRmaS5NpFghuiWswTbnZ-5vrpfnDptBparJ709GU/exec";
+const googleScriptURL = "https://script.google.com/macros/s/AKfycbxg7g0qv3gOwCekOlapNZoTE-hnVYnzd0-lOvG7cq6Vad3jRMMLF4KyKO-Ziy43mLLU/exec";
 
 $(document).ready(function () {
 
@@ -697,14 +697,18 @@ $(document).ready(function () {
 
     // 1. Form inputs se data nikalna
     const formData = {
-      name: $('#userName').val(),
+      userName: $('#userName').val(),
       phoneNo: $('#userPhone').val(),
       email: $('#userEmail').val(),
       qualification: $('#userQualification').val()
     };
 
     console.log(formData);
-    
+
+    const userName = formData.userName;
+    const phoneNo = formData.phoneNo;
+    const email = formData.email;
+    const qualification = formData.qualification;
 
     try {
       // 2. Ek hi function ke andar API (Google Script) ko data bhejna
@@ -714,21 +718,41 @@ $(document).ready(function () {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          userName: formData.name,
-          userPhone: formData.phoneNo,
-          userEmail: formData.email,
-          userQualification: formData.qualification,
-        })
-      })
+          userName,
+          phoneNo,
+          email,
+          qualification
+        }),
+        mode: 'no-cors',
+      });
+
+      console.log(res);
 
       // 3. Success Hone Par
-      if (res.ok) {
-        alert("Success! Your request is submitted. You can now download the brochure.");
-        $('#brochureForm')[0].reset(); // Form ka data clear karna
-      }
+      alert("Success! Your request is submitted. Click Ok to Download Brochure...");
 
-      // PDF download trigger karwane ke liye comment hata dein:
-      // window.open('link-to-your-brochure.pdf', '_blank'); 
+      // Form ka data clear karna
+      $('#brochureForm')[0].reset();
+
+      // ----------------------------------------------------
+      // NEW ADDITIONS: Force Download & Close Modal
+      // ----------------------------------------------------
+
+      // A. Force Download the PDF
+      const downloadLink = document.createElement('a');
+      downloadLink.href = 'assets/Brochure.pdf'; // Aapka PDF path
+      downloadLink.download = 'EII_Brochure.pdf'; // User ke system me jis naam se save hoga
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+
+      // B. Modal ko close karna (Ye form ke parent modal ko dhundh kar hide kar dega)
+      $('#brochureForm').closest('.modal').modal('hide');
+
+      // (Optional) Agar Bootstrap 5 ka vanilla JS modal use kar rahe hain aur upar wala hide kaam na kare:
+      // const modalElement = document.getElementById('YOUR_MODAL_ID'); // modal ka ID dalein
+      // const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      // modalInstance.hide();
 
     } catch (error) {
       // 4. Error Aane Par
@@ -738,6 +762,78 @@ $(document).ready(function () {
     } finally {
       // 5. Success ho ya Error, Button ko wapas pehle jaisa karna
       $submitBtn.text(originalText).prop('disabled', false);
+    }
+  });
+
+});
+
+// Google Script URL
+const googleScriptURL2 = "https://script.google.com/macros/s/AKfycbwHdFT_eVdmJCzhNsjaNu2mhpoXprTWP4_NE7_mGlG5latIJPK7pagT2uf3bp2M_1AfKw/exec";
+
+$(document).ready(function () {
+
+  // Registration Form Submit Event (Naya ID use kiya hai)
+  $('#registration-form').on('submit', async function (e) {
+    e.preventDefault(); // Page refresh rokna
+
+    // 1. Button state update karna
+    const $form = $(this);
+    const $submitBtn = $form.find('button[type="submit"]');
+    const originalText = $submitBtn.text();
+    $submitBtn.text('Please wait...').prop('disabled', true);
+
+    // Message dikhane wala container
+    const $messageContainer = $form.find('.form-messages');
+    $messageContainer.text('').show(); // Purane message clear karna aur show karna
+
+    // 2. Form fields se data nikalna
+    const formData = {
+      userName: $('#name').val(),
+      phoneNo: $('#phone').val(),
+      email: $('#email').val(),
+      course: $('#course').val() // Dropdown ka selected value
+    };
+
+    try {
+      // 3. Data Google Script par bhejna (CORS bypass ke sath)
+      await fetch(googleScriptURL2, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData),
+        mode: 'no-cors', 
+      });
+
+      // 4. Success State (Message set karna aur form reset karna)
+      $messageContainer
+        .css({'color': 'green', 'font-weight': 'bold'})
+        .text("Success! Your registration is complete. Our counselor will contact you soon.");
+      
+      $form[0].reset(); // Form fields ko blank kar dena
+
+      // 5. Modal ko close karna (2 second ka delay taaki user message padh sake)
+      setTimeout(() => {
+        $form.closest('.modal').modal('hide');
+      }, 2000);
+
+    } catch (error) {
+      // 6. Error State
+      $messageContainer
+        .css({'color': 'red', 'font-weight': 'bold'})
+        .text("Ooops! Something went wrong. Please try again.");
+      console.error("Registration Form Error:", error);
+
+    } finally {
+      // 7. Button ko wapas pehle jaisa karna
+      $submitBtn.text(originalText).prop('disabled', false);
+
+      // (Optional) 5 second baad text message ko fadeOut karke gayab kar dena
+      setTimeout(() => {
+        $messageContainer.fadeOut('slow', function() {
+            $(this).text('').show();
+        });
+      }, 5000);
     }
   });
 
