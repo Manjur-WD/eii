@@ -10655,13 +10655,41 @@ blockquote.vs-quote .quote-author {
   background-position: center center;
 }
 
+
+.brand-wrap img{
+  height: 100px;
+  aspect-ratio: 1/1;
+  background-color: white;
+  border-radius: 50%;
+  object-fit: contain;
+  padding: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.brand-slider{
+  background-color: var(--secondary-color);
+}
+
 .brand-wrap2,
 .brand-wrap3 {
-  background-color: var(--smoke-color);
+  background-color: var(--white-color);
   text-align: center;
-  padding: 80px 100px;
-  border-radius: 20px;
+  padding: 40px 100px;
+  border-radius: 50px;
   margin-top: -110px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.brand-title{
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--title-color);
+  text-align: left;
+  font-weight: 800;
+  line-height: 1;
+  border-right: 1px solid #ccc;
+  padding-right: 20px;
 }
 
 @media (max-width: 991px) {
