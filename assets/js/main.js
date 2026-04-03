@@ -30,20 +30,7 @@
   ==================================*/
   /*
 
-  /*---------- 01. On Load Function ----------*/
-  $(window).on("load", function () {
-    $(".preloader").fadeOut();
-  });
 
-  /*---------- 02. Preloader ----------*/
-  if ($(".preloader").length > 0) {
-    $(".preloaderCls").each(function () {
-      $(this).on("click", function (e) {
-        e.preventDefault();
-        $(".preloader").css("display", "none");
-      });
-    });
-  }
 
   /*---------- 03. Mobile Menu Active ----------*/
   $.fn.vsmobilemenu = function (options) {
@@ -140,7 +127,6 @@
 
   /*---------- 04. Sticky fix ----------*/
   var lastScrollTop = "";
-  var scrollToTopBtn = ".scrollToTop";
 
   function stickyMenu($targetMenu, $toggleClass, $parentClass) {
     var st = $(window).scrollTop();
@@ -162,26 +148,6 @@
   }
   $(window).on("scroll", function () {
     stickyMenu($(".sticky-active"), "active", "will-sticky");
-    if ($(this).scrollTop() > 500) {
-      $(scrollToTopBtn).addClass("show");
-    } else {
-      $(scrollToTopBtn).removeClass("show");
-    }
-  });
-
-  /*---------- 05. Scroll To Top ----------*/
-  $(scrollToTopBtn).each(function () {
-    $(this).on("click", function (e) {
-      e.preventDefault();
-      console.log("scroll to top clicked");
-      $("html, body").animate(
-        {
-          scrollTop: 0,
-        },
-        1000
-      );
-      return false;
-    });
   });
 
   /*---------- 06.Set Background Image ----------*/
@@ -204,9 +170,9 @@
 
     // Custom Arrow Button
     var prevButton =
-        '<button type="button" class="slick-prev"><i class="' +
-        d("prev-arrow") +
-        '"></i></button>',
+      '<button type="button" class="slick-prev"><i class="' +
+      d("prev-arrow") +
+      '"></i></button>',
       nextButton =
         '<button type="button" class="slick-next"><i class="' +
         d("next-arrow") +
@@ -483,93 +449,7 @@
     type: "iframe",
   });
 
-  /*---------- 11. Section Position ----------*/
-  // Interger Converter
-  function convertInteger(str) {
-    return parseInt(str, 10);
-  }
 
-  $.fn.sectionPosition = function (mainAttr, posAttr, getPosValue) {
-    $(this).each(function () {
-      var section = $(this);
-
-      function setPosition() {
-        var sectionHeight = Math.floor(section.height() / 2), // Main Height of section
-          posValue = convertInteger(section.attr(getPosValue)), // positioning value
-          posData = section.attr(mainAttr), // how much to position
-          posFor = section.attr(posAttr), // On Which section is for positioning
-          parentPT = convertInteger($(posFor).css("padding-top")), // Default Padding of  parent
-          parentPB = convertInteger($(posFor).css("padding-bottom")); // Default Padding of  parent
-
-        if (posData === "top-half") {
-          $(posFor).css("padding-bottom", parentPB + sectionHeight + "px");
-          section.css("margin-top", "-" + sectionHeight + "px");
-        } else if (posData === "bottom-half") {
-          $(posFor).css("padding-top", parentPT + sectionHeight + "px");
-          section.css("margin-bottom", "-" + sectionHeight + "px");
-        } else if (posData === "top") {
-          $(posFor).css("padding-bottom", parentPB + posValue + "px");
-          section.css("margin-top", "-" + posValue + "px");
-        } else if (posData === "bottom") {
-          $(posFor).css("padding-top", parentPT + posValue + "px");
-          section.css("margin-bottom", "-" + posValue + "px");
-        }
-      }
-      setPosition(); // Set Padding On Load
-    });
-  };
-
-  var postionHandler = "[data-sec-pos]";
-  if ($(postionHandler).length) {
-    $(postionHandler).imagesLoaded(function () {
-      $(postionHandler).sectionPosition(
-        "data-sec-pos",
-        "data-pos-for",
-        "data-pos-amount"
-      );
-    });
-  }
-
-  /*----------- 12. Filter ----------*/
-  $(".filter-active, .filter-active2").imagesLoaded(function () {
-    var $filter = ".filter-active",
-      $filter2 = ".filter-active2",
-      $filterItem = ".filter-item",
-      $filterMenu = ".filter-menu-active";
-
-    if ($($filter).length > 0) {
-      var $grid = $($filter).isotope({
-        itemSelector: $filterItem,
-        filter: "*",
-        masonry: {
-          // use outer width of grid-sizer for columnWidth
-          columnWidth: 1,
-        },
-      });
-    }
-
-    if ($($filter2).length > 0) {
-      var $grid = $($filter2).isotope({
-        itemSelector: $filterItem,
-        filter: "*",
-        masonry: {
-          // use outer width of grid-sizer for columnWidth
-          columnWidth: $filterItem,
-        },
-      });
-    }
-
-    // Menu Active Class
-    $($filterMenu).on("click", "button", function (event) {
-      event.preventDefault();
-      var filterValue = $(this).attr("data-filter");
-      $grid.isotope({
-        filter: filterValue,
-      });
-      $(this).addClass("active");
-      $(this).siblings(".active").removeClass("active");
-    });
-  });
 
   /*----------- 13. One Page Nav ----------*/
   function onePageNav(element) {
@@ -635,23 +515,7 @@
     });
   });
 
-  /*----------- 16. Color Plate Js ----------*/
-  if ($(".vs-color-plate").length) {
-    var oldValue = $("#plate-color").val();
-    $("#plate-color").on("change", function (e) {
-      var color = e.target.value;
-      $("body").css("--theme-color", color);
-    });
 
-    $("#plate-reset").on("click", function () {
-      $("body").css("--theme-color", "");
-      $("#plate-color").val(oldValue);
-    });
-
-    $("#plate-toggler").on("click", function () {
-      $(".vs-color-plate").toggleClass("open");
-    });
-  }
   /*----------- 17. Animate Counter Js ----------*/
   // Function to animate the counters
   function animateCounter(counter) {
@@ -725,163 +589,156 @@
   if ($(".shape-mockup")) {
     $(".shape-mockup").shapeMockup();
   }
-  /*----------- 19. Custom Tab  ----------*/
-  $.fn.vsTab = function (options) {
-    var opt = $.extend(
-      {
-        sliderTab: false,
-        tabButton: "button",
-        indicator: false,
-      },
-      options
-    );
 
-    $(this).each(function () {
-      var $menu = $(this);
-      var $button = $menu.find(opt.tabButton);
-
-      // On Click Button Class Remove and indecator postion set
-      $button.on("click", function (e) {
-        e.preventDefault();
-        var cBtn = $(this);
-        cBtn.addClass("active").siblings().removeClass("active");
-        if (opt.sliderTab) {
-          $(slider).slick("slickGoTo", cBtn.data("slide-go-to"));
-        }
-      });
-
-      // Work With slider
-      if (opt.sliderTab) {
-        var slider = $menu.data("asnavfor"); // select slider
-
-        // Select All button and set attribute
-        var i = 0;
-        $button.each(function () {
-          var slideBtn = $(this);
-          slideBtn.attr("data-slide-go-to", i);
-          i++;
-
-          // Active Slide On load > Actived Button
-          if (slideBtn.hasClass("active")) {
-            $(slider).slick("slickGoTo", slideBtn.data("slide-go-to"));
-          }
-
-          // Change Indicator On slide Change
-          $(slider).on(
-            "beforeChange",
-            function (event, slick, currentSlide, nextSlide) {
-              $menu
-                .find(opt.tabButton + '[data-slide-go-to="' + nextSlide + '"]')
-                .addClass("active")
-                .siblings()
-                .removeClass("active");
-            }
-          );
-        });
-      }
-    });
-  };
-
-  // Call On Load
-  if ($(".vs-slider-tab").length) {
-    $(".vs-slider-tab").vsTab({
-      sliderTab: true,
-      tabButton: ".tab-btn",
-    });
-  }
-  /*----------- 20. Countdown Js ----------*/
-  $.fn.countdown = function () {
-    this.each(function () {
-      var $this = $(this),
-        offerDate = new Date($this.data("offer-date")).getTime();
-
-      function findElement(selector) {
-        return $this.find(selector);
-      }
-
-      var interval = setInterval(function () {
-        var now = new Date().getTime(),
-          timeDiff = offerDate - now,
-          days = Math.floor(timeDiff / 864e5),
-          hours = Math.floor((timeDiff % 864e5) / 36e5),
-          minutes = Math.floor((timeDiff % 36e5) / 6e4),
-          seconds = Math.floor((timeDiff % 6e4) / 1e3);
-
-        days < 10 && (days = "0" + days),
-          hours < 10 && (hours = "0" + hours),
-          minutes < 10 && (minutes = "0" + minutes),
-          seconds < 10 && (seconds = "0" + seconds);
-
-        if (timeDiff < 0) {
-          clearInterval(interval);
-          $this.addClass("expired");
-          findElement(".message").css("display", "block");
-        } else {
-          findElement(".day").html(days);
-          findElement(".hour").html(hours);
-          findElement(".minute").html(minutes);
-          findElement(".seconds").html(seconds);
-        }
-      }, 1000);
-    });
-  };
-
-  $(".offer-counter").length && $(".offer-counter").countdown();
-
-  // -----Country Code Selection
-  document.addEventListener("DOMContentLoaded", function () {
-    function initializeIntlTelInput(id) {
-      const input = document.querySelector(`#${id}`);
-      if (input) {
-        window.intlTelInput(input, {
-          initialCountry: "bd",
-          nationalMode: true,
-        });
-      }
-    }
-
-    // Initialize on the first tab by default
-    initializeIntlTelInput("phone1");
-
-    // Reinitialize on tab show
-    const tabElements = document.querySelectorAll(
-      'button[data-bs-toggle="tab"]'
-    );
-    tabElements.forEach((tab) => {
-      tab.addEventListener("shown.bs.tab", function (event) {
-        const target = event.target.getAttribute("data-bs-target");
-        if (target === "#home-tab-pane") {
-          initializeIntlTelInput("phone1");
-        } else if (target === "#profile-tab-pane") {
-          initializeIntlTelInput("phone2");
-        }
-      });
-    });
-  });
 })(jQuery);
 
- /*----------- 00. Right Click Disable ----------*/
-  // window.addEventListener('contextmenu', function (e) {
-  //   // do something here... 
-  //   e.preventDefault();
-  // }, false);
 
+$(document).ready(function () {
 
-  /*----------- 00. Inspect Element Disable ----------*/
-  // document.onkeydown = function (e) {
-  //   if (event.keyCode == 123) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) {
-  //     return false;
-  //   }
-  //   if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) {
-  //     return false;
-  //   }
-  // }
+  // 1. Aapka JSON Data
+  const coursesData = [
+    {
+      id: 1,
+      title: "Executive Program in Event Management",
+      rating: 4.8,
+      duration: "8 Months",
+      status: "Open Enrolled",
+      price: "₹59,999 + GST",
+      about: "Designed for the ambitious beginner, the Executive Program is your gateway into the fast-paced world of event management. Backed by the 25-year legacy of Abybaby Events, this course strips away the theory and focuses on what actually works on the ground. In just 8 months, you will transition from a student to a field-ready professional capable of executing seamless events.",
+      subjectsCovered: [
+        "Corporate Event", "Social Event", "BTL Activation & Promotion",
+        "Event Production & Budgeting", "I.P Creation & Event Entrepreneurship", "Digital marketing"
+      ],
+      keyBenefits: [
+        "Industry-Ready in 8 Months", "The Abybaby Advantage",
+        "Practical Focus", "360-Degree Exposure"
+      ],
+      studentFacilities: [
+        "Expert Faculty (Veterans)", "Comprehensive Curriculum",
+        "Digital Learning Resources", "Event Training & Guidance", "Guaranteed Internship Opportunities"
+      ]
+    },
+    {
+      id: 2,
+      title: "Advance Executive Program in Event Management",
+      rating: 4.9,
+      duration: "15 Months",
+      status: "Open Enrolled",
+      price: "₹99,999 + GST",
+      about: "This is not just a course; it is a leadership pipeline. The Advance Executive Program is a premium, immersive journey designed for those who don't just want to participate in events but want to lead them. Spanning 15 months, this comprehensive diploma dives deep into the strategic, financial, and psychological aspects of event management.",
+      subjectsCovered: [
+        "Corporate Event", "Social Event", "Concert Management",
+        "BTL Activation & Promotion", "Sports Event Management", "Graphics & Video",
+        "AI in Marketing", "Event Production & Budgeting", "I.P Creation & Event Entrepreneurship",
+        "M.I.C.E", "Digital marketing"
+      ],
+      keyBenefits: [
+        "Strategic Mastery", "Premium Portfolio Building",
+        "Leadership Development", "Advanced Tech Integration"
+      ],
+      studentFacilities: [
+        "Expert Faculty (Veterans)", "Global-Standard Syllabus",
+        "Digital Library Access", "Mentorship on Live Event Pressure", "Guaranteed Internship Opportunities"
+      ]
+    }
+  ];
+
+  // 2. Modal ko Fill karne ka Function (Window object pe attach kiya hai taaki onclick chal sake)
+  window.populateModalContent = function (courseId) {
+
+    // ID se data find karo
+    const course = coursesData.find(c => c.id === courseId);
+
+    // Agar data na mile toh wapas jao
+    if (!course) return;
+
+    // Text Elements Fill karna (jQuery .text() use karke)
+    $('#modalCourseTitle').text(course.title);
+    $('#modalCourseStatus').text(course.status);
+    $('#modalCourseRating').text(course.rating);
+    $('#modalCoursePrice').text(course.price);
+    $('#modalCourseDuration').text(course.duration);
+    $('#modalCourseAbout').text(course.about);
+
+    // Subjects List create aur inject karna (jQuery $.map use karke)
+    let subjectsHtml = $.map(course.subjectsCovered, function (sub) {
+      return `<li class="mb-2"><i class="fas fa-check-circle text-theme me-2"></i> ${sub}</li>`;
+    }).join('');
+    $('#modalCourseSubjects').html(subjectsHtml);
+
+    // Benefits List create aur inject karna
+    let benefitsHtml = $.map(course.keyBenefits, function (ben) {
+      return `<li class="mb-2"><i class="fas fa-star text-theme me-2"></i> ${ben}</li>`;
+    }).join('');
+    $('#modalCourseBenefits').html(benefitsHtml);
+
+    // Facilities List create aur inject karna
+    let facilitiesHtml = $.map(course.studentFacilities, function (fac) {
+      return `<li class="mb-2"><i class="fas fa-award text-theme me-2"></i> ${fac}</li>`;
+    }).join('');
+    $('#modalCourseFacilities').html(facilitiesHtml);
+  };
+
+});
+
+// Google Script ka URL sabse upar rakhein
+const googleScriptURL = "https://script.google.com/macros/s/AKfycbyQNbqO2ANxIvs4zWr7GV6stxxpdRmaS5NpFghuiWswTbnZ-5vrpfnDptBparJ709GU/exec";
+
+$(document).ready(function () {
+
+  // Form submit event par direct function chalega
+  $('#brochureForm').on('submit', async function (e) {
+    e.preventDefault(); // Form ko submit hokar page refresh karne se rokna
+
+    // Button ko processing state mein daalna
+    const $submitBtn = $(this).find('button[type="submit"]');
+    const originalText = $submitBtn.text();
+    $submitBtn.text('Submitting...').prop('disabled', true);
+
+    // 1. Form inputs se data nikalna
+    const formData = {
+      name: $('#userName').val(),
+      phoneNo: $('#userPhone').val(),
+      email: $('#userEmail').val(),
+      qualification: $('#userQualification').val()
+    };
+
+    console.log(formData);
+    
+
+    try {
+      // 2. Ek hi function ke andar API (Google Script) ko data bhejna
+      const res = await fetch(googleScriptURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userName: formData.name,
+          userPhone: formData.phoneNo,
+          userEmail: formData.email,
+          userQualification: formData.qualification,
+        })
+      })
+
+      // 3. Success Hone Par
+      if (res.ok) {
+        alert("Success! Your request is submitted. You can now download the brochure.");
+        $('#brochureForm')[0].reset(); // Form ka data clear karna
+      }
+
+      // PDF download trigger karwane ke liye comment hata dein:
+      // window.open('link-to-your-brochure.pdf', '_blank'); 
+
+    } catch (error) {
+      // 4. Error Aane Par
+      alert("Ooops! There was a problem submitting your request. Please try again.");
+      console.error("Submission Error:", error);
+
+    } finally {
+      // 5. Success ho ya Error, Button ko wapas pehle jaisa karna
+      $submitBtn.text(originalText).prop('disabled', false);
+    }
+  });
+
+});

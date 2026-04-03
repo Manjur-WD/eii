@@ -58,7 +58,7 @@
   <!--[if lte IE 9]>
     	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
   <![endif]-->
-  
+
   <div class="vs-menu-wrapper">
     <div class="vs-menu-area text-center">
       <div class="mobile-logo">
@@ -210,7 +210,8 @@
             </div>
             <div class="col-auto">
               <div class="d-none d-xl-inline-flex">
-                <a href="about.html" class="vs-btn" tabindex="0">
+                <a href="#brochureModal" class="vs-btn" tabindex="0" data-bs-toggle="modal" data-toggle="modal"
+                  data-bs-target="#brochureModal" data-target="#brochureModal">
                   <i class="fas fa-download"></i>
                   Download Brochure
                 </a>
@@ -338,7 +339,8 @@
                     <a href="#register" class="vs-btn">
                       Claim Your Seat
                     </a>
-                    <a href="#courses" class="vs-btn style3">
+                    <a href="#brochureModal" class="vs-btn style3" data-bs-toggle="modal" data-toggle="modal"
+                      data-bs-target="#brochureModal" data-target="#brochureModal">
                       Download Brochure
                     </a>
                   </div>
@@ -538,7 +540,10 @@
 
                 <span class="event-price">Course Fees: <span>₹59,999 + GST</span></span>
               </div>
-              <a href="javascript:void(0);" class="event-link mt-3">View Details</a>
+              <a href="#courseModal" class="event-link mt-3" data-bs-toggle="modal" data-toggle="modal"
+                data-bs-target="#courseModal" data-target="#courseModal" onclick="populateModalContent(1)">View
+                Details</a>
+              <a href="#register" class="event-link mt-3 text-theme bg-theme text-white ms-2">Enroll Now</a>
             </div>
           </div>
         </div>
@@ -569,7 +574,10 @@
               <div class="event-footer">
                 <span class="event-price">Course Fees: <span>₹99,999 + GST</span></span>
               </div>
-              <a href="javascript:void(0);" class="event-link mt-3">View Details</a>
+              <a href="#courseModal" class="event-link mt-3" data-bs-toggle="modal" data-toggle="modal"
+                data-bs-target="#courseModal" data-target="#courseModal" onclick="populateModalContent(2)">View
+                Details</a>
+              <a href="#register" class="event-link mt-3 text-theme bg-theme text-white ms-2">Enroll Now</a>
             </div>
           </div>
         </div>
@@ -1293,7 +1301,7 @@
   </section>
   <!-- Gallery Area End -->
   <!-- Footer Area -->
-  <footer class="footer-layout2 shape-mockup-wrap">
+  <footer class="footer-layout2 shape-mockup-wrap" id="contact">
     <div class="shape-mockup d-none d-xl-block z-index-negative" data-top="0%" data-left="0%">
       <img src="assets/img/shapes/footer-2-1.png" alt="footer shape">
     </div>
@@ -1402,6 +1410,99 @@
   <!-- Custom Phone Number Input -->
   <script src="../../../cdn.jsdelivr.net/npm/intl-tel-input%4023.7.3/build/js/intlTelInput.min.js"></script>
   <!-- Main Js File -->
+  <!-- Modals -->
+  <!-- Brochure Modal -->
+  <div class="modal fade" id="brochureModal" tabindex="-1" aria-labelledby="brochureModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="brochureModalLabel">Register to Download Brochure</h5>
+          <button type="button" class="btn-close close" data-bs-dismiss="modal" data-dismiss="modal"
+            aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <form id="brochureForm">
+            <div class="form-group mb-3">
+              <input type="text" class="form-control" id="userName" name="userName" placeholder="Full Name *" required>
+            </div>
+            <div class="form-group mb-3">
+              <input type="tel" class="form-control" id="userPhone" name="userPhone" placeholder="Phone Number *" required>
+            </div>
+            <div class="form-group mb-3">
+              <input type="email" class="form-control" id="userEmail" name="userEmail" placeholder="Email Address *" required>
+            </div>
+            <div class="form-group mb-4">
+              <input type="text" class="form-control" id="userQualification" name="userQualification" placeholder="Qualification *" required>
+            </div>
+            <button type="submit" class="vs-btn w-100">Download Brochure</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Details Modal -->
+  <div class="modal fade" id="courseModal" tabindex="-1" aria-labelledby="courseModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="modalCourseTitle">Course Title Here</h5>
+          <button type="button" class="btn-close close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-warning fw-bold">
+              <i class="fas fa-star"></i> <span id="modalCourseRating">0.0</span>/5
+            </span>
+          </div>
+
+          <h4 class="mb-3 text-theme">
+            <span id="modalCoursePrice">₹00,000</span>
+            <span class="fs-6 text-muted fw-normal"> | <span id="modalCourseDuration">0 Months</span></span>
+          </h4>
+
+          <p class="text-muted lh-base" id="modalCourseAbout">Course description will appear here...</p>
+
+          <hr class="my-4">
+
+          <div class="row mt-3">
+
+            <div class="col-md-4 mb-4">
+              <h6 class="fw-bold mb-3">Subjects Covered</h6>
+              <ul class="list-unstyled text-muted" id="modalCourseSubjects">
+              </ul>
+            </div>
+
+            <div class="col-md-4 mb-4">
+              <h6 class="fw-bold mb-3">Key Benefits</h6>
+              <ul class="list-unstyled text-muted bg-light p-3 rounded" id="modalCourseBenefits">
+              </ul>
+            </div>
+
+            <div class="col-md-4 mb-4">
+              <h6 class="fw-bold mb-3">Student Facilities</h6>
+              <ul class="list-unstyled text-muted" id="modalCourseFacilities">
+              </ul>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/+919830873000?text=Hi!%20I%20want%20to%20know%20more%20about%20your%20courses."
+    class="whatsapp-float" target="_blank" rel="noopener noreferrer">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
   <script src="assets/js/main.js"></script>
 </body>
 
