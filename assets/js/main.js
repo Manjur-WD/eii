@@ -189,7 +189,7 @@
       dots: d("dots") ? true : false,
       fade: d("fade") ? true : false,
       arrows: d("arrows") ? true : false,
-      speed: d("speed") ? d("speed") : 1000,
+      speed: d("speed") ? d("speed") : 500,
       asNavFor: d("asnavfor") ? d("asnavfor") : false,
       autoplay: d("autoplay") == false ? false : true,
       infinite: d("infinite") == false ? false : true,
@@ -284,6 +284,53 @@
             arrows: d("xs-arrows") ? true : false,
             dots: d("xs-dots") ? true : false,
             slidesToShow: d("xs-slide-show") ? d("xs-slide-show") : 1,
+            centerMode: d("xs-center-mode") ? true : false,
+            centerPadding: d("xs-center-padding")
+              ? d("xs-center-padding")
+              : "0",
+          },
+        },
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ],
+    });
+  });
+  $("#brand-slider1").each(function () {
+    var asSlide = $(this);
+
+    // Collect Data
+    function d(data) {
+      return asSlide.data(data);
+    }
+
+    asSlide.slick({
+      dots: d("dots") ? true : false,
+      fade: d("fade") ? true : false,
+      arrows: d("arrows") ? true : false,
+      speed: d("speed") ? d("speed") : 500,
+      asNavFor: d("asnavfor") ? d("asnavfor") : false,
+      autoplay: d("autoplay") == false ? false : true,
+      infinite: d("infinite") == false ? false : true,
+      slidesToShow: d("slide-show") ? d("slide-show") : 1,
+      adaptiveHeight: d("adaptive-height") ? true : false,
+      centerMode: d("center-mode") ? true : false,
+      autoplaySpeed: d("autoplay-speed") ? d("autoplay-speed") : 1000,
+      centerPadding: d("center-padding") ? d("center-padding") : "0",
+      focusOnSelect: d("focuson-select") == false ? false : true,
+      pauseOnFocus: d("pauseon-focus") ? true : false,
+      pauseOnHover: d("pauseon-hover") ? true : false,
+      variableWidth: d("variable-width") ? true : false,
+      vertical: d("vertical") ? true : false,
+      verticalSwiping: d("vertical") ? true : false,
+      rtl: $("html").attr("dir") == "rtl" ? true : false,
+      responsive: [
+        {
+          breakpoint: 576,
+          settings: {
+            arrows: d("xs-arrows") ? true : false,
+            dots: d("xs-dots") ? true : false,
+            slidesToShow: d("xs-slide-show") ? d("xs-slide-show") : 3,
             centerMode: d("xs-center-mode") ? true : false,
             centerPadding: d("xs-center-padding")
               ? d("xs-center-padding")
@@ -837,4 +884,68 @@ $(document).ready(function () {
     }
   });
 
-});
+  // Auto Popup Form Submit Event
+  $('#popup-registration-form').on('submit', async function (e) {
+    e.preventDefault(); 
+
+    const $form = $(this);
+    const $submitBtn = $form.find('button[type="submit"]');
+    const originalText = $submitBtn.text();
+    $submitBtn.text('Please wait...').prop('disabled', true);
+
+    const $messageContainer = $form.find('.form-messages');
+    $messageContainer.text('').show();
+
+    const formData = {
+      userName: $('#popup-name').val(),
+      phoneNo: $('#popup-phone').val(),
+      email: $('#popup-email').val(),
+      course: $('#popup-course').val() 
+    };
+
+    try {
+      await fetch(googleScriptURL2, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData),
+        mode: 'no-cors', 
+      });
+
+      $messageContainer
+        .css({'color': 'green', 'font-weight': 'bold'})
+        .text("Success! Our counselor will contact you soon.");
+      
+      $form[0].reset(); 
+
+      setTimeout(() => {
+        $form.closest('.modal').modal('hide');
+      }, 2000);
+
+    } catch (error) {
+      $messageContainer
+        .css({'color': 'red', 'font-weight': 'bold'})
+        .text("Ooops! Something went wrong. Please try again.");
+      console.error("Popup Registration Form Error:", error);
+
+    } finally {
+      $submitBtn.text(originalText).prop('disabled', false);
+
+      setTimeout(() => {
+        $messageContainer.fadeOut('slow', function() {
+            $(this).text('').show();
+        });
+      }, 5000);
+    }
+  });
+
+  // Auto show popup modal after 12 seconds
+  setTimeout(() => {
+    // Check if another modal is currently open. If not, open the autoPopupModal.
+    if (!$('.modal.show').length) {
+      $('#autoPopupModal').modal('show');
+    }
+  }, 12000);
+
+});

@@ -361,7 +361,7 @@
             <h2 class="brand-title">Trusted <span class="text-theme">Partners</span></h2>
           </div>
           <div class="col-md-10 mb-md-0 mb-3">
-            <div class="vs-carousel" data-slide-show="4" data-lg-slide-show="3" data-md-slide-show="2"
+            <div class="" data-slide-show="4" data-lg-slide-show="3" data-md-slide-show="2"
               id="brand-slider1">
               <div class="brand-wrap">
                 <div class="brand-style1">
@@ -630,11 +630,8 @@
                 <div class="col-md-12 form-group">
                   <select class="form-control" name="course" id="course" required>
                     <option value="" selected disabled>Select Program of Interest *</option>
-                    <option value="Corporate events">Corporate events</option>
-                    <option value="Social events">Social events</option>
-                    <option value="Royal wedding">Royal wedding planning</option>
-                    <option value="BTL activities and Promotion">BTL activities and Promotion</option>
-                    <option value="Digital Marketing">Digital Marketing</option>
+                    <option value="Executive program Event Management">Executive program Event Management</option>
+                    <option value="Advance program Event Management">Advance program Event Management</option>
                   </select>
                 </div>
 
@@ -1461,8 +1458,57 @@
       </div>
     </div>
   </div>
+  
+  <!-- Auto Popup Modal -->
+  <div class="modal fade" id="autoPopupModal" tabindex="-1" aria-labelledby="autoPopupModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-pill shadow-lg position-relative">
+        <div class="modal-body p-0">
+          <button style="z-index: 99;" type="button" class="btn-close  position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"><i class="fal fa-times text-white fa-2x"></i></button>
+          <form class="form-style1 mb-0" id="popup-registration-form">
+            <img src="assets/img/shapes/f-1-1.png" alt="form shape" class="shape-1">
+            <img src="assets/img/shapes/f-1-2.png" alt="form shape" class="shape-2">
+
+            <h3 class="title">Limited Seats Left, Hurry Up!</h3>
+
+            <div class="row gx-20">
+              <div class="col-md-12 form-group">
+                <input class="form-control" type="text" name="name" id="popup-name" placeholder="Full Name *" required>
+              </div>
+
+              <div class="col-md-12 form-group">
+                <input class="form-control" type="email" name="email" id="popup-email" placeholder="Email Address *" required>
+              </div>
+
+              <div class="col-md-12 form-group">
+                <input class="form-control" type="tel" name="phone" id="popup-phone" placeholder="Phone Number *" required>
+              </div>
+
+              <div class="col-md-12 form-group">
+                <select class="form-control" name="course" id="popup-course" required>
+                  <option value="" selected disabled>Select Program of Interest *</option>
+                  <option value="Executive program Event Management">Executive program Event Management</option>
+                  <option value="Advance program Event Management">Advance program Event Management</option>
+                </select>
+              </div>
+
+              <div class="col-md-12 form-group mb-0">
+                <button class="vs-btn style2 w-100" type="submit">Get Callback Now</button>
+              </div>
+
+              <div class="col-12 mt-3 text-center">
+                <p class="form-messages mb-0"></p>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <a href="https://wa.me/+919830873000?text=Hi!%20I%20want%20to%20know%20more%20about%20your%20courses."
+
     class="whatsapp-float" target="_blank" rel="noopener noreferrer">
     <i class="fab fa-whatsapp"></i>
   </a>
